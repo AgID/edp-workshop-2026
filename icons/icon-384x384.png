@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="384" height="384" viewBox="0 0 384 384">
+  <rect width="384" height="384" rx="48" fill="#004EA8"/>
+  <rect x="19" y="238" width="346" height="23" fill="#00A3E0"/>
+  <text x="192" y="173" font-family="Arial,sans-serif" font-weight="bold" font-size="108" fill="white" text-anchor="middle">EDP</text>
+  <text x="192" y="276" font-family="Arial,sans-serif" font-size="50" fill="#CCE0F5" text-anchor="middle">WORKSHOP</text>
+  <text x="192" y="334" font-family="Arial,sans-serif" font-size="42" fill="#CCE0F5" text-anchor="middle">ROME 2026</text>
+</svg>

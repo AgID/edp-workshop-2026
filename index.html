@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="EDP Workshop">
+<meta name="application-name" content="EDP Workshop">
+<meta name="theme-color" content="#004EA8">
+<meta name="description" content="European Data Portal's Workshop for Data Providers – Rome, 16-17 June 2026">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192x192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="icons/icon-144x144.png">
+<link rel="icon" type="image/svg+xml" href="icons/icon-192x192.png">
+<title>European Data Portal's Workshop for Data Providers – Rome, June 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --agid-blue:       #0066CC;
+    --agid-blue-dark:  #004EA8;
+    --agid-blue-xdark: #003D82;
+    --agid-blue-light: #CCE0F5;
+    --agid-blue-pale:  #E8F1FB;
+    --agid-accent:     #00A3E0;
+    --agid-accent-lt:  #D6F1FA;
+    --agid-green:      #008055;
+    --agid-green-lt:   #D4EDE3;
+    --agid-orange:     #CC4400;
+    --agid-orange-lt:  #FAE5DC;
+    --agid-gray-bg:    #F0F6FC;
+    --agid-gray-line:  rgba(0,102,204,0.15);
+    --agid-text:       #17324D;
+    --agid-text-muted: #5B7D9B;
+    --agid-text-light: #8AABBF;
+    --radius: 8px;
+    --font: 'Titillium Web', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: var(--agid-gray-bg); color: var(--agid-text); line-height: 1.65; }
+
+  .gov-bar {
+    background: var(--agid-blue-xdark);
+    padding: 6px 40px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .gov-bar span { font-size: 12px; color: rgba(255,255,255,0.75); font-weight: 300; }
+  .gov-bar a { color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 600; text-decoration: none; }
+
+  .hero {
+    background: var(--agid-blue-dark);
+    color: #fff;
+    padding: 52px 40px 44px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 40%;
+    background: linear-gradient(135deg, transparent 0%, rgba(0,163,224,0.18) 100%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 4px; background: var(--agid-accent);
+  }
+  .hero-inner { max-width: 920px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .hero-org { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--agid-accent); }
+  .hero h1 { font-weight: 700; font-size: clamp(22px, 4vw, 38px); line-height: 1.2; margin-bottom: 8px; }
+  .hero-subtitle { font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.8); margin-bottom: 28px; max-width: 580px; }
+  .hero-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 600;
+    background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.25);
+  }
+
+  .emergency-strip {
+    background: var(--agid-orange); color: #fff;
+    padding: 11px 40px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; font-size: 13px;
+  }
+  .emergency-strip strong { font-weight: 700; }
+
+  .container { max-width: 940px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 44px 0; }
+  .section + .section { border-top: 1px solid var(--agid-gray-line); }
+  .section-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--agid-accent); font-weight: 700; margin-bottom: 6px; }
+  .section-title { font-size: 24px; font-weight: 700; color: var(--agid-blue-dark); margin-bottom: 24px; }
+
+  .venue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media(max-width:640px){ .venue-grid { grid-template-columns: 1fr; } }
+  .venue-map-wrap { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--agid-gray-line); height: 280px; }
+  .venue-map-wrap iframe { width: 100%; height: 100%; border: none; }
+  .venue-info { display: flex; flex-direction: column; gap: 12px; }
+  .info-row {
+    display: flex; gap: 12px; padding: 13px 15px;
+    background: #fff; border-radius: var(--radius);
+    border: 1px solid var(--agid-gray-line); align-items: flex-start;
+  }
+  .info-icon { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
+  .info-icon.blue   { background: var(--agid-blue-pale); }
+  .info-icon.green  { background: var(--agid-green-lt); }
+  .info-icon.accent { background: var(--agid-accent-lt); }
+  .info-icon.orange { background: var(--agid-orange-lt); }
+  .info-row-label { font-size: 10px; color: var(--agid-text-muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; }
+  .info-row-value  { font-size: 13px; color: var(--agid-text); margin-top: 2px; }
+  .info-row-value a { color: var(--agid-blue); text-decoration: none; }
+  .info-row-value a:hover { text-decoration: underline; }
+
+  .route-box { background: #fff; border: 1px solid var(--agid-gray-line); border-radius: var(--radius); padding: 22px; }
+  .mode-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .mode-tab {
+    padding: 6px 14px; border: 1px solid var(--agid-gray-line);
+    border-radius: 100px; font-size: 13px; cursor: pointer;
+    background: transparent; color: var(--agid-text-muted);
+    font-family: var(--font); transition: all 0.15s;
+  }
+  .mode-tab.active { background: var(--agid-blue); color: #fff; border-color: var(--agid-blue); }
+  .route-inputs { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
+  .route-inputs input {
+    flex: 1; min-width: 200px; padding: 10px 14px;
+    border: 1px solid var(--agid-gray-line); border-radius: 6px;
+    font-family: var(--font); font-size: 14px; background: var(--agid-gray-bg); color: var(--agid-text); outline: none;
+  }
+  .route-inputs input:focus { border-color: var(--agid-blue); box-shadow: 0 0 0 3px rgba(0,102,204,0.15); }
+  .route-btn {
+    padding: 10px 20px; background: var(--agid-blue); color: #fff;
+    border: none; border-radius: 6px; font-family: var(--font);
+    font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background 0.15s;
+  }
+  .route-btn:hover { background: var(--agid-blue-dark); }
+
+  .transport-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+  .transport-card {
+    background: #fff; border: 1px solid var(--agid-gray-line);
+    border-radius: var(--radius); padding: 18px;
+    border-top: 3px solid var(--agid-blue);
+  }
+  .transport-card.train   { border-top-color: var(--agid-green); }
+  .transport-card.airport { border-top-color: var(--agid-orange); }
+  .transport-card.taxi    { border-top-color: var(--agid-accent); }
+  .t-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .t-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .t-icon.metro   { background: var(--agid-blue-pale); }
+  .t-icon.train   { background: var(--agid-green-lt); }
+  .t-icon.airport { background: var(--agid-orange-lt); }
+  .t-icon.taxi    { background: var(--agid-accent-lt); }
+  .t-title   { font-size: 15px; font-weight: 700; color: var(--agid-blue-dark); }
+  .t-subtitle{ font-size: 12px; color: var(--agid-text-muted); }
+  .step-list { list-style: none; }
+  .step-list li {
+    display: flex; gap: 9px; padding: 6px 0;
+    font-size: 13px; border-bottom: 1px solid rgba(0,102,204,0.07);
+    color: var(--agid-text); line-height: 1.45;
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-num {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--agid-blue-pale); border: 1px solid var(--agid-blue-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+    color: var(--agid-blue-dark);
+  }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 100px; margin-top: 4px; }
+  .tag.metro  { background: var(--agid-blue-pale);   color: var(--agid-blue-dark); }
+  .tag.time   { background: var(--agid-accent-lt);   color: #005580; }
+  .tag.cost   { background: var(--agid-green-lt);    color: #004D33; }
+
+  /* AGENDA */
+  .agenda-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media(max-width:660px){ .agenda-grid { grid-template-columns: 1fr; } }
+  .day-card { background: #fff; border: 1px solid var(--agid-gray-line); border-radius: var(--radius); overflow: hidden; }
+  .day-header { padding: 16px 20px; }
+  .day-header.day1 { background: var(--agid-blue-dark); color: #fff; }
+  .day-header.day2 { background: var(--agid-accent);    color: #fff; }
+  .day-header h3   { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+  .day-header small{ font-size: 12px; opacity: 0.8; font-weight: 300; }
+
+  .seg-header {
+    padding: 7px 16px 5px;
+    background: var(--agid-blue-pale);
+    border-bottom: 1px solid var(--agid-blue-light);
+    border-top: 1px solid var(--agid-blue-light);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--agid-blue-dark);
+  }
+  .seg-header.green  { background: var(--agid-green-lt); color: #004D33; border-color: #b3d9c7; }
+  .seg-header.accent { background: var(--agid-accent-lt); color: #005580; border-color: #9ed9f0; }
+  .seg-header.orange { background: var(--agid-orange-lt); color: #7A2900; border-color: #f0c4b3; }
+
+  .tl-item {
+    display: flex; gap: 10px; padding: 9px 16px;
+    border-bottom: 1px solid rgba(0,102,204,0.07);
+    font-size: 12.5px; align-items: flex-start;
+  }
+  .tl-item:last-child { border-bottom: none; }
+  .tl-time { font-weight: 700; font-size: 11px; color: var(--agid-blue); min-width: 80px; padding-top: 2px; white-space: nowrap; }
+  .tl-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--agid-blue-light); flex-shrink: 0; margin-top: 5px; }
+  .tl-dot.break  { background: #ccc; }
+  .tl-dot.social { background: var(--agid-orange); }
+  .tl-dot.key    { background: var(--agid-blue); }
+  .tl-desc { color: var(--agid-text); line-height: 1.45; flex: 1; }
+  .tl-desc strong { font-weight: 700; color: var(--agid-blue-dark); }
+  .tl-desc em { font-size: 11.5px; color: var(--agid-text-muted); display: block; margin-top: 2px; font-style: normal; }
+
+  .tour-route { background: #fff; border: 1px solid var(--agid-gray-line); border-radius: var(--radius); overflow: hidden; }
+  .tour-route iframe { width: 100%; height: 340px; border: none; display: block; }
+  .tour-stops { padding: 14px 18px; display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+  .stop-pill {
+    display: flex; align-items: center; gap: 7px;
+    padding: 6px 12px; border: 1px solid var(--agid-gray-line);
+    border-radius: 100px; font-size: 12.5px; background: #fff;
+  }
+  .stop-num {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--agid-orange); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; flex-shrink: 0;
+  }
+  .stop-arr { color: var(--agid-text-light); font-size: 13px; }
+
+  .info-box { border-radius: var(--radius); padding: 14px 18px; font-size: 13px; line-height: 1.6; }
+  .info-box.blue   { background: var(--agid-blue-pale); border: 1px solid var(--agid-blue-light); color: #003366; }
+  .info-box.green  { background: var(--agid-green-lt);  border: 1px solid #b3d9c7; color: #004D33; }
+
+  .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+  .tip-card {
+    background: #fff; border: 1px solid var(--agid-gray-line);
+    border-radius: var(--radius); padding: 16px;
+    border-left: 3px solid var(--agid-blue);
+  }
+  .tip-icon  { font-size: 22px; margin-bottom: 6px; }
+  .tip-title { font-weight: 700; font-size: 13px; color: var(--agid-blue-dark); margin-bottom: 4px; }
+  .tip-body  { font-size: 12.5px; color: var(--agid-text-muted); line-height: 1.5; }
+
+  footer {
+    background: var(--agid-blue-xdark); color: rgba(255,255,255,0.65);
+    text-align: center; padding: 28px 24px; font-size: 13px;
+  }
+  footer a { color: var(--agid-accent); text-decoration: none; }
+  footer strong { color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="gov-bar">
+  <span>🇮🇹 An official website of the Italian Government —</span>
+  <a href="https://www.agid.gov.it" target="_blank">Agenzia per l'Italia Digitale (AgID)</a>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span style="font-size:20px">🇪🇺</span>
+      <span class="hero-org">European Data Portal · Workshop for Data Providers</span>
+    </div>
+    <h1>European Data Portal's Workshop<br>for Data Providers</h1>
+    <p class="hero-subtitle">Practical guide for participants — how to reach AgID and navigate Rome during the event.</p>
+    <div class="hero-chips">
+      <span class="chip">📅 16–17 June 2026</span>
+      <span class="chip">📍 AgID, Via Liszt 21, Rome</span>
+      <span class="chip">🚇 Metro B — EUR Palasport</span>
+      <span class="chip">🇮🇹 Rome, Italy</span>
+    </div>
+
+    <div style="margin-top:18px;">
+      <button id="install-btn" onclick="installApp()" style="display:none; align-items:center; gap:8px; padding:10px 20px; background:#00A3E0; color:#fff; border:none; border-radius:6px; font-family:'Titillium Web',sans-serif; font-size:14px; font-weight:700; cursor:pointer;">
+        📲 Install as app
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="emergency-strip">
+  <strong>Quick contacts:</strong>
+  <span>🚨 Emergency: <strong>112</strong></span>
+  <span>🏥 Medical: <strong>118</strong></span>
+  <span>🚒 Fire: <strong>115</strong></span>
+  <span>🚔 Police: <strong>113</strong></span>
+  <span>☎️ AgID: <strong>+39 06 852641</strong></span>
+</div>
+
+<div class="container">
+
+  <div class="section">
+    <p class="section-label">Venue</p>
+    <h2 class="section-title">AgID headquarters</h2>
+    <div class="venue-grid">
+      <div class="venue-map-wrap">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2971.8!2d12.4678744!3d41.8337229!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13258ae234a3e7c1%3A0x653d87ff1bf26eae!2sAgID%20-%20Agenzia%20per%20l&#39;Italia%20Digitale!5e0!3m2!1sen!2sit!4v1716000000000!5m2!1sen!2sit" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="venue-info">
+        <div class="info-row">
+          <div class="info-icon blue">📍</div>
+          <div><div class="info-row-label">Full address</div><div class="info-row-value">Via Liszt, 21 — 00144 Roma RM<br>EUR district (Laurentino area)</div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon blue">🚇</div>
+          <div><div class="info-row-label">Nearest metro</div><div class="info-row-value"><strong>EUR Palasport</strong> — Metro B (blue line)<br>~5 min: north on Viale Beethoven, right into Via Liszt</div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon green">🚌</div>
+          <div><div class="info-row-label">Bus lines nearby</div><div class="info-row-value">Lines <strong>30 · 170 · 671 · 766</strong><br>Stop: Viale Beethoven / Via Liszt</div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon orange">🅿️</div>
+          <div><div class="info-row-label">Parking</div><div class="info-row-value">Limited street parking on Via Liszt.<br>EUR Palasport park-and-ride available.</div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon accent">📞</div>
+          <div><div class="info-row-label">AgID phone</div><div class="info-row-value"><a href="tel:+390685264100">+39 06 852641</a></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="nav">
+    <p class="section-label">Navigation</p>
+    <h2 class="section-title">Get directions to AgID</h2>
+    <div class="route-box">
+      <p style="font-size:13px; color:var(--agid-text-muted); margin-bottom:14px;">Enter your starting point (hotel name, address, or landmark) and open a live route to AgID.</p>
+      <div class="mode-tabs">
+        <button class="mode-tab active" onclick="setMode('transit',this)">🚇 Transit</button>
+        <button class="mode-tab" onclick="setMode('driving',this)">🚗 Car</button>
+        <button class="mode-tab" onclick="setMode('bicycling',this)">🚲 Bike</button>
+        <button class="mode-tab" onclick="setMode('walking',this)">🚶 Walking</button>
+      </div>
+      <div class="route-inputs">
+        <input type="text" id="origin" placeholder="Your hotel or starting address…" />
+        <button class="route-btn" onclick="openRoute()">Open in Google Maps →</button>
+      </div>
+      <p style="font-size:12px; color:var(--agid-text-light); margin-top:10px;">Destination fixed: <strong>AgID, Via Liszt 21, 00144 Roma</strong>. Opens in a new tab.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">Transport</p>
+    <h2 class="section-title">How to reach AgID</h2>
+    <div class="transport-grid">
+      <div class="transport-card metro">
+        <div class="t-header"><div class="t-icon metro">🚇</div><div><div class="t-title">Metro B</div><div class="t-subtitle">From city centre · Fastest</div></div></div>
+        <ul class="step-list">
+          <li><span class="step-num">1</span><span>Take <strong>Metro B</strong> (blue line) from any B station</span></li>
+          <li><span class="step-num">2</span><span>Direction <em>Laurentina</em> — exit at <strong>EUR Palasport</strong></span></li>
+          <li><span class="step-num">3</span><span>Exit onto <strong>Viale Beethoven</strong>, walk north ~200m</span></li>
+          <li><span class="step-num">4</span><span>Turn <strong>right into Via Liszt</strong> — AgID n. 21 on the left after ~150m</span></li>
+        </ul>
+        <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:5px;">
+          <span class="tag time">⏱ ~20–30 min from Termini</span>
+          <span class="tag cost">€ 1.50 per trip</span>
+          <span class="tag metro">Line B</span>
+        </div>
+        <div style="margin-top:14px; border-radius:6px; overflow:hidden; border:1px solid var(--agid-gray-line);">
+          <div style="background:var(--agid-blue-pale); padding:7px 12px; font-size:11px; font-weight:700; color:var(--agid-blue-dark); text-transform:uppercase; letter-spacing:0.08em;">
+            🗺️ Walking route: EUR Palasport → AgID
+          </div>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d712.8!2d12.4670!3d41.8319!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0x13258b1e721e497b:0xfab91710404886ef!2sEUR+Palasport+Metro,+Rome!3m2!1d41.8301246!2d12.4662992!4m5!1s0x13258ae234a3e7c1:0x653d87ff1bf26eae!2sAgID+-+Agenzia+per+l\'Italia+Digitale,+Via+Liszt,+21,+00144+Roma!3m2!1d41.8337229!2d12.4678744!5e0!3m2!1sen!2sit!4v1716000000010"
+            width="100%" height="240" style="border:none; display:block;"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+          <div style="background:var(--agid-blue-pale); padding:8px 12px; font-size:12px; color:var(--agid-blue-dark); line-height:1.55;">
+            <strong>Step by step:</strong> Exit EUR Palasport station → walk <strong>north on Viale Beethoven</strong> (~200m) → turn <strong>right into Via Liszt</strong> → AgID is at <strong>n. 21</strong> on your left (~150m). Total: ~350m, about 5 min.
+          </div>
+        </div>
+      </div>
+      <div class="transport-card train">
+        <div class="t-header"><div class="t-icon train">🚆</div><div><div class="t-title">From Roma Termini</div><div class="t-subtitle">High-speed or regional trains</div></div></div>
+        <ul class="step-list">
+          <li><span class="step-num">1</span><span>Arrive at <strong>Roma Termini</strong> — Italy's main rail hub</span></li>
+          <li><span class="step-num">2</span><span>Follow signs to <strong>Metro B</strong> (blue), platforms level −1</span></li>
+          <li><span class="step-num">3</span><span>Direction <em>Laurentina</em>, exit at <strong>EUR Palasport</strong> (8 stops, ~17 min)</span></li>
+          <li><span class="step-num">4</span><span>Exit onto Viale Beethoven, walk north ~200m, turn right into Via Liszt — AgID at n. 21</span></li>
+        </ul>
+        <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:5px;">
+          <span class="tag time">⏱ ~30 min total</span>
+          <span class="tag cost">€ 1.50 metro ticket</span>
+        </div>
+      </div>
+      <div class="transport-card airport">
+        <div class="t-header"><div class="t-icon airport">✈️</div><div><div class="t-title">From Fiumicino (FCO)</div><div class="t-subtitle">Leonardo da Vinci Airport</div></div></div>
+        <ul class="step-list">
+          <li><span class="step-num">1</span><span><strong>Leonardo Express</strong> FCO → Termini (30 min, every 15 min)</span></li>
+          <li><span class="step-num">2</span><span>At Termini: <strong>Metro B</strong> direction Laurentina → EUR Palasport</span></li>
+          <li><span class="step-num">3</span><span>Walk 5 min to AgID</span></li>
+          <li><span class="step-num" style="background:var(--agid-orange-lt); color:#7A2900; border-color:#f0c4b3;">or</span><span>Taxi direct FCO → AgID: ~40–50 min, fixed rate approx. €50–60</span></li>
+        </ul>
+        <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:5px;">
+          <span class="tag time">⏱ ~55 min train+metro</span>
+          <span class="tag cost">€ 17.50 Leo Express + metro</span>
+        </div>
+      </div>
+      <div class="transport-card taxi">
+        <div class="t-header"><div class="t-icon taxi">🚖</div><div><div class="t-title">Taxi &amp; Rideshare</div><div class="t-subtitle">Door-to-door</div></div></div>
+        <ul class="step-list">
+          <li><span class="step-num">1</span><span><strong>itTaxi</strong> or <strong>FREE NOW</strong> apps work well in Rome</span></li>
+          <li><span class="step-num">2</span><span><strong>Uber</strong> operates in Rome (confirm availability in app)</span></li>
+          <li><span class="step-num">3</span><span>White city taxis: metered, ranks outside Termini</span></li>
+          <li><span class="step-num">4</span><span>Give address: <strong>"Via Liszt 21, EUR"</strong></span></li>
+        </ul>
+        <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:5px;">
+          <span class="tag time">⏱ 15–40 min (traffic-dependent)</span>
+          <span class="tag cost">€10–25 from centre</span>
+        </div>
+      </div>
+    </div>
+    <div class="info-box green" style="margin-top:16px;">
+      <strong>🎫 Rome public transport tickets:</strong> Single BIT <strong>€1.50</strong> (valid 100 min, one metro ride). Day pass <strong>€7.00</strong>. 48h <strong>€12.50</strong>. 72h <strong>€18.00</strong>. Weekly <strong>€24.00</strong>. Available at metro machines, tobacconists (tabacchi), and via <em>Tap &amp; Go</em> contactless (bank card / Apple Pay / Google Pay — €1.50/ride).
+    </div>
+  </div>
+
+  <!-- AGENDA -->
+<span id="agenda"></span>
+  <div class="section">
+    <p class="section-label">Programme</p>
+    <h2 class="section-title">Workshop agenda</h2>
+    <p style="font-size:13px; color:var(--agid-text-muted); margin-bottom:20px; font-style:italic;">Draft agenda — all times are indicative and subject to change.</p>
+    <div class="agenda-grid">
+
+      <div class="day-card">
+        <div class="day-header day1">
+          <h3>Day 1 — Tuesday, 16 June 2026</h3>
+          <small>Workshop + Evening social</small>
+        </div>
+        <div class="seg-header">Welcome &amp; presentation from host country</div>
+        <div class="tl-item"><div class="tl-time">09:00–09:15</div><div class="tl-dot"></div><div class="tl-desc"><strong>Walk in and registration</strong><em>Sign in, name tags, information pack</em></div></div>
+        <div class="tl-item"><div class="tl-time">09:15–09:25</div><div class="tl-dot key"></div><div class="tl-desc"><strong>Welcome and formal opening</strong><em>Hosts and organisers, objectives, practical arrangements</em></div></div>
+        <div class="tl-item"><div class="tl-time">09:25–09:45</div><div class="tl-dot"></div><div class="tl-desc"><strong>Participant introductions</strong><em>Icebreaker</em></div></div>
+        <div class="tl-item"><div class="tl-time">09:45–10:30</div><div class="tl-dot key"></div><div class="tl-desc"><strong>Keynote by the host country</strong></div></div>
+        <div class="tl-item"><div class="tl-time">10:30–10:45</div><div class="tl-dot break"></div><div class="tl-desc" style="color:var(--agid-text-muted);">☕ Coffee break</div></div>
+
+        <div class="seg-header green">EU Open Data &amp; Digital Policies</div>
+        <div class="tl-item"><div class="tl-time">10:45–11:30</div><div class="tl-dot key"></div><div class="tl-desc"><strong>Update on EU data and digital policy</strong><em>Digital Omnibus, EU Data Union Strategy, Open Data Directive, DGA, EDIB, HVD reporting (2027)</em></div></div>
+        <div class="tl-item"><div class="tl-time">11:30–12:15</div><div class="tl-dot"></div><div class="tl-desc"><strong>Community session: Policy status in Member States</strong><em>Progress, challenges and lessons — contributions from 2–3 countries</em></div></div>
+        <div class="tl-item"><div class="tl-time">12:15–13:30</div><div class="tl-dot break"></div><div class="tl-desc" style="color:var(--agid-text-muted);">🍽️ Lunch &amp; group photo</div></div>
+
+        <div class="seg-header accent">Spotlight on Policy Implementation</div>
+        <div class="tl-item"><div class="tl-time">13:30–14:00</div><div class="tl-dot key"></div><div class="tl-desc"><strong>State of play on the European Data Portal</strong><em>HVD availability, HVD dashboard, protected data catalogues, geospatial / GeoDCAT-AP</em></div></div>
+        <div class="tl-item"><div class="tl-time">14:00–14:45</div><div class="tl-dot"></div><div class="tl-desc"><strong>Community session: Implementation in practice</strong><em>Successes and challenges — contributions from 2–3 countries</em></div></div>
+        <div class="tl-item"><div class="tl-time">14:45–15:00</div><div class="tl-dot break"></div><div class="tl-desc" style="color:var(--agid-text-muted);">☕ Coffee break</div></div>
+        <div class="tl-item"><div class="tl-time">15:00–15:20</div><div class="tl-dot key"></div><div class="tl-desc"><strong>Commission guidance on interoperability and standards</strong></div></div>
+        <div class="tl-item"><div class="tl-time">15:20–15:45</div><div class="tl-dot key"></div><div class="tl-desc"><strong>Lessons from the first HVD reporting exercise</strong><em>Standard tools for automated HVD reporting to the Commission (Feb 2027)</em></div></div>
+        <div class="tl-item"><div class="tl-time">15:45–16:45</div><div class="tl-dot"></div><div class="tl-desc"><strong>Interactive session: quality &amp; HVD reporting challenges</strong><em>Breakout groups — common challenges, solutions, alignment needs</em></div></div>
+
+        <div class="seg-header orange">Networking</div>
+        <div class="tl-item"><div class="tl-time">17:00–18:30</div><div class="tl-dot social"></div><div class="tl-desc"><strong>Optional: Afternoon walking tour 🏛️</strong><em>Archaeological sites — depart from workshop venue as a group</em></div></div>
+        <div class="tl-item"><div class="tl-time">19:30–21:00</div><div class="tl-dot social"></div><div class="tl-desc"><strong>Optional: Evening networking with light dinner</strong><em>Meeting point: to be confirmed by host country</em></div></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header day2">
+          <h3>Day 2 — Wednesday, 17 June 2026</h3>
+          <small>Knowledge sharing, impact &amp; reuse</small>
+        </div>
+        <div class="seg-header">Welcome back &amp; knowledge sharing</div>
+        <div class="tl-item"><div class="tl-time">09:00–09:15</div><div class="tl-dot"></div><div class="tl-desc"><strong>Walk in and welcome back</strong><em>Day's objectives and practical arrangements</em></div></div>
+        <div class="tl-item"><div class="tl-time">09:15–10:15</div><div class="tl-dot key"></div><div class="tl-desc"><strong>Interactive session: Open data café</strong><em>Informal small-group networking with discussion cards on open data topics</em></div></div>
+        <div class="tl-item"><div class="tl-time">10:15–10:30</div><div class="tl-dot break"></div><div class="tl-desc" style="color:var(--agid-text-muted);">☕ Coffee break</div></div>
+
+        <div class="seg-header green">Impact &amp; Reuse</div>
+        <div class="tl-item"><div class="tl-time">10:30–10:45</div><div class="tl-dot key"></div><div class="tl-desc"><strong>Findings from the EDP reuser survey</strong><em>Methodology, results and follow-up actions</em></div></div>
+        <div class="tl-item"><div class="tl-time">10:45–11:15</div><div class="tl-dot key"></div><div class="tl-desc"><strong>Tutorial: Toolkit for measuring impact</strong><em>Practical walk-through of the EDP impact measurement toolkit</em></div></div>
+        <div class="tl-item"><div class="tl-time">11:15–11:45</div><div class="tl-dot"></div><div class="tl-desc"><strong>Community session: Engaging with the reuser community</strong><em>How countries interact with reusers and insights into identified needs — 2–3 countries</em></div></div>
+        <div class="tl-item"><div class="tl-time">11:45–12:15</div><div class="tl-dot"></div><div class="tl-desc"><strong>Community session (open)</strong><em>Topics proposed by representatives — e.g. use of AI tools in national portals</em></div></div>
+
+        <div class="seg-header accent">Closure</div>
+        <div class="tl-item"><div class="tl-time">12:15–12:30</div><div class="tl-dot key"></div><div class="tl-desc"><strong>Concluding remarks &amp; closure</strong></div></div>
+        <div class="tl-item"><div class="tl-time">12:30–13:30</div><div class="tl-dot break"></div><div class="tl-desc" style="color:var(--agid-text-muted);">🍽️ Lunch</div></div>
+        <div class="tl-item"><div class="tl-time">After lunch</div><div class="tl-dot"></div><div class="tl-desc"><strong>EDP one-on-one guidance sessions</strong><em>Individual sessions for countries — book in advance (time permitting)</em></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOUR -->
+  <div class="section">
+    <p class="section-label">Day 1 Evening — Optional</p>
+    <h2 class="section-title">Afternoon tour of historic Rome</h2>
+    <p style="font-size:13px; color:var(--agid-text-muted); margin-bottom:20px;">The tour has two parts: metro from AgID to the Colosseo, then a walking tour through the archaeological centre.</p>
+
+    <!-- Overall sequence pills -->
+    <div style="background:#fff; border:1px solid var(--agid-gray-line); border-radius:var(--radius); padding:16px 18px; margin-bottom:20px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+      <div class="stop-pill"><span class="stop-num" style="background:var(--agid-blue); font-size:9px;">🚶</span>AgID</div>
+      <span class="stop-arr">→</span>
+      <div class="stop-pill"><span class="stop-num" style="background:var(--agid-blue); font-size:9px;">🚇</span>EUR Palasport</div>
+      <span style="font-size:11px; font-weight:700; color:var(--agid-blue); padding:0 2px;">━━ Metro B (~18 min) ━━</span>
+      <div class="stop-pill"><span class="stop-num" style="background:var(--agid-blue); font-size:9px;">🚇</span>Colosseo</div>
+      <span class="stop-arr">→</span>
+      <div class="stop-pill"><span class="stop-num">1</span>Colosseo</div>
+      <span class="stop-arr">→</span>
+      <div class="stop-pill"><span class="stop-num">2</span>Fori Imperiali</div>
+      <span class="stop-arr">→</span>
+      <div class="stop-pill"><span class="stop-num">3</span>Campidoglio</div>
+      <span class="stop-arr">→</span>
+      <div class="stop-pill"><span class="stop-num">4</span>Altare della Patria</div>
+      <span class="stop-arr">→</span>
+      <div class="stop-pill"><span class="stop-num">5</span>Return via Fori Imperiali</div>
+    </div>
+
+    <!-- PART 1: Metro -->
+    <div style="background:#fff; border:1px solid var(--agid-gray-line); border-radius:var(--radius); overflow:hidden; margin-bottom:16px;">
+      <div style="background:var(--agid-blue); padding:10px 18px; display:flex; align-items:center; gap:10px;">
+        <span style="font-size:18px;">🚇</span>
+        <div>
+          <div style="font-size:13px; font-weight:700; color:#fff;">Part 1 — Metro B: AgID → Colosseo</div>
+          <div style="font-size:11px; color:rgba(255,255,255,0.75);">EUR Palasport → Colosseo · direction Jonio/Rebibbia · ~18 min · 8 stops</div>
+        </div>
+      </div>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d8714!2d12.479!3d41.860!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e3!4m5!1s0x13258ae234a3e7c1%3A0x653d87ff1bf26eae!2sAgID+Agenzia+per+l%27Italia+Digitale%2C+Via+Liszt%2C+21%2C+00144+Roma!3m2!1d41.8337229!2d12.4678744!4m5!1s0x13258b1e721e497b%3A0xfab91710404886ef!2sEUR+Palasport+Metro%2C+Rome!3m2!1d41.8301246!2d12.4662992!5e0!3m2!1sen!2sit!4v1716000000020"
+        width="100%" height="220" style="border:none; display:block;"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      <div style="border-top:1px solid var(--agid-blue-light); padding:8px 18px; background:#fff; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:12px; color:var(--agid-text-muted);">↑ Walk AgID → EUR Palasport (~5 min)</span>
+        <span style="font-size:12px; color:var(--agid-text-muted); margin-left:auto;">Then board Metro B direction Jonio / Rebibbia ↓</span>
+      </div>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d14074!2d12.479!3d41.860!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e3!4m5!1s0x13258b1e721e497b%3A0xfab91710404886ef!2sEUR+Palasport+Metro%2C+Rome!3m2!1d41.8301246!2d12.4662992!4m5!1s0x132f61b283540c55%3A0x3975c39cc7e05043!2sColosseo+Metro%2C+Piazza+del+Colosseo%2C+Roma!3m2!1d41.8901!2d12.4922!5e0!3m2!1sen!2sit!4v1716000000022"
+        width="100%" height="260" style="border:none; display:block;"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      <div style="padding:10px 18px; font-size:12.5px; color:var(--agid-text); line-height:1.6; background:var(--agid-blue-pale);">
+        <strong>From AgID:</strong> Exit onto Via Liszt → left on Viale Beethoven (~150m) → left to <strong>EUR Palasport</strong> Metro B (~5 min walk). Board direction <em>Jonio / Rebibbia</em> and ride 8 stops to <strong>Colosseo</strong>. Exit: the Colosseum is visible immediately outside the station.
+      </div>
+    </div>
+
+    <!-- PART 2: Walking -->
+    <div style="background:#fff; border:1px solid var(--agid-gray-line); border-radius:var(--radius); overflow:hidden;">
+      <div style="background:var(--agid-orange); padding:10px 18px; display:flex; align-items:center; gap:10px;">
+        <span style="font-size:18px;">🏛️</span>
+        <div>
+          <div style="font-size:13px; font-weight:700; color:#fff;">Part 2 — Walking tour: Colosseo → Altare della Patria</div>
+          <div style="font-size:11px; color:rgba(255,255,255,0.8);">~2 km on foot · flat terrain · ~45–60 min at a leisurely pace</div>
+        </div>
+      </div>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m34!1m12!1m3!1d1867!2d12.4876!3d41.8926!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m19!3e2!4m5!1s0x132f61b283540c55%3A0x3975c39cc7e05043!2sColosseo%2C+Piazza+del+Colosseo%2C+1%2C+00184+Roma!3m2!1d41.8902102!2d12.4922309!4m5!1s0x13258f4213c69b0f%3A0x1b1d2a8a4ad4e2fb!2sVia+dei+Fori+Imperiali%2C+Roma!3m2!1d41.8931814!2d12.4872587!4m5!1s0x13258f4d68782aad%3A0x3d5dbe7db6e77c3d!2sAltare+della+Patria%2C+Piazza+Venezia%2C+00186+Roma!3m2!1d41.894891!2d12.4829541!5e0!3m2!1sen!2sit!4v1716000000021"
+        width="100%" height="300" style="border:none; display:block;"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      <div style="padding:12px 18px; font-size:12.5px; color:var(--agid-text); line-height:1.6; background:var(--agid-orange-lt); border-top:1px solid rgba(204,68,0,0.15);">
+        <strong>Route:</strong>
+        <strong>1</strong> Start at the <strong>Colosseo</strong> (exterior view, Arco di Costantino) →
+        <strong>2</strong> Walk west along <strong>Via dei Fori Imperiali</strong> (~600m, ruins of the Imperial Fora on both sides) →
+        <strong>3</strong> Climb the <strong>Campidoglio</strong> (Michelangelo's piazza, panoramic view over the Roman Forum) →
+        <strong>4</strong> Descend to <strong>Altare della Patria</strong> / Piazza Venezia (Vittoriano monument) →
+        <strong>5</strong> Return eastward along Via dei Fori Imperiali toward Colosseo for metro home (or taxis at Piazza Venezia).
+        <br><br>
+        <span style="color:var(--agid-orange);">☀️</span> <strong>Tip:</strong> Comfortable shoes essential. Bring water — June temperatures reach 30–34 °C. Free water fountains (nasoni) along the route.
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="section">
+    <p class="section-label">Useful info</p>
+    <h2 class="section-title">Tips for participants</h2>
+    <div class="tips-grid">
+      <div class="tip-card"><div class="tip-icon">📱</div><div class="tip-title">Navigation apps</div><div class="tip-body">Google Maps and Moovit work well for Rome transit. Download offline maps for the city centre.</div></div>
+      <div class="tip-card"><div class="tip-icon">💳</div><div class="tip-title">Payments</div><div class="tip-body">Cards and contactless widely accepted. Metro gates support Tap &amp; Go (bank card / phone) at €1.50/ride.</div></div>
+      <div class="tip-card"><div class="tip-icon">☀️</div><div class="tip-title">June weather</div><div class="tip-body">Expect 28–34 °C, mostly sunny. Sunscreen, sunglasses and a water bottle essential. Free water fountains (nasoni) throughout Rome.</div></div>
+      <div class="tip-card"><div class="tip-icon">🛜</div><div class="tip-title">Connectivity</div><div class="tip-body">EU roaming applies across all EU countries. SIM cards at FCO airport or Termini (TIM, Vodafone, WINDTRE, Iliad).</div></div>
+      <div class="tip-card"><div class="tip-icon">🏨</div><div class="tip-title">Where to stay</div><div class="tip-body">Prati, Trastevere, or near Termini for good Metro B access. EUR district hotels are a short walk to AgID.</div></div>
+      <div class="tip-card"><div class="tip-icon">⚡</div><div class="tip-title">Power plugs</div><div class="tip-body">Italy uses Type F/L plugs, 230V. Most EU plugs fit without adapter. UK/US participants need a Type F adapter.</div></div>
+      <div class="tip-card"><div class="tip-icon">🍕</div><div class="tip-title">Lunch near AgID</div><div class="tip-body">Cafés and restaurants within 5 min along Viale Europa and Viale della Civiltà del Lavoro in the EUR district.</div></div>
+      <div class="tip-card"><div class="tip-icon">🗣️</div><div class="tip-title">Language</div><div class="tip-body">English widely understood in EUR district and tourist areas. Workshop sessions conducted in English.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p><strong>European Data Portal's Workshop for Data Providers</strong></p>
+  <p style="margin-top:6px;">AgID — Agenzia per l'Italia Digitale · Via Liszt, 21, 00144 Roma · <a href="https://www.agid.gov.it" target="_blank">www.agid.gov.it</a></p>
+  <p style="margin-top:4px; font-size:12px;">Rome, 16–17 June 2026 · Draft agenda — all times subject to change</p>
+</footer>
+
+<script>
+let travelMode = 'transit';
+function setMode(m, el) {
+  travelMode = m;
+  document.querySelectorAll('.mode-tab').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+function openRoute() {
+  const origin = document.getElementById('origin').value.trim();
+  if (!origin) { alert('Please enter your starting location.'); return; }
+  const dest = encodeURIComponent("AgID Agenzia per l'Italia Digitale, Via Liszt 21, 00144 Roma");
+  const enc  = encodeURIComponent(origin);
+  window.open('https://www.google.com/maps/dir/?api=1&origin='+enc+'&destination='+dest+'&travelmode='+travelMode, '_blank');
+}
+document.getElementById('origin').addEventListener('keypress', function(e){ if(e.key==='Enter') openRoute(); });
+</script>
+
+<div id="offline-banner" style="display:none; position:fixed; bottom:0; left:0; right:0; background:#004EA8; color:#fff; text-align:center; padding:10px 16px; font-family:'Titillium Web',sans-serif; font-size:14px; z-index:9999;">
+  📶 You are offline — the app is working from cache.
+</div>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('SW registered', reg.scope))
+      .catch(err => console.warn('SW error', err));
+  });
+}
+window.addEventListener('online',  () => { document.getElementById('offline-banner').style.display='none'; });
+window.addEventListener('offline', () => { document.getElementById('offline-banner').style.display='block'; });
+
+// Install prompt (Android Chrome)
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const btn = document.getElementById('install-btn');
+  if (btn) { btn.style.display = 'inline-flex'; }
+});
+function installApp() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+  }
+}
+window.addEventListener('appinstalled', () => {
+  const btn = document.getElementById('install-btn');
+  if (btn) btn.style.display = 'none';
+});
+</script>
+</body>
+</html>
