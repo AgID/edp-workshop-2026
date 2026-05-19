@@ -32,7 +32,7 @@
     --agid-blue-xdark: #003D82;
     --agid-blue-light: #CCE0F5;
     --agid-blue-pale:  #E8F1FB;
-    --agid-accent:     #00A3E0;
+    --agid-accent:     #0077A8;   /* darkened for AA contrast on white */
     --agid-accent-lt:  #D6F1FA;
     --agid-green:      #008055;
     --agid-green-lt:   #D4EDE3;
@@ -41,8 +41,8 @@
     --agid-gray-bg:    #F0F6FC;
     --agid-gray-line:  rgba(0,102,204,0.15);
     --agid-text:       #17324D;
-    --agid-text-muted: #5B7D9B;
-    --agid-text-light: #8AABBF;
+    --agid-text-muted: #3A5F7A;   /* darkened for AA contrast ratio ≥4.5 */
+    --agid-text-light: #4A6878;   /* darkened for AA contrast ratio ≥4.5 */
     --radius: 8px;
     --font: 'Titillium Web', sans-serif;
   }
@@ -172,8 +172,33 @@
   }
   .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 100px; margin-top: 4px; }
   .tag.metro  { background: var(--agid-blue-pale);   color: var(--agid-blue-dark); }
-  .tag.time   { background: var(--agid-accent-lt);   color: #005580; }
+  .tag.time   { background: var(--agid-accent-lt);   color: #004466; }
   .tag.cost   { background: var(--agid-green-lt);    color: #004D33; }
+
+
+  /* Accessibility */
+  .skip-link {
+    position: absolute; top: -40px; left: 0;
+    background: #003D82; color: #fff;
+    padding: 8px 16px; z-index: 10000;
+    font-family: var(--font); font-size: 14px; font-weight: 600;
+    text-decoration: none; border-radius: 0 0 6px 0;
+    transition: top 0.15s;
+  }
+  .skip-link:focus { top: 0; }
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+  /* Focus visible for all interactive elements */
+  a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+    outline: 3px solid #FFCC00;
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+  .mode-tab:focus-visible { outline: 3px solid #FFCC00; outline-offset: 2px; }
+  .route-btn:focus-visible { outline: 3px solid #FFCC00; outline-offset: 2px; }
 
   /* AGENDA */
   .agenda-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
@@ -194,8 +219,8 @@
     text-transform: uppercase; color: var(--agid-blue-dark);
   }
   .seg-header.green  { background: var(--agid-green-lt); color: #004D33; border-color: #b3d9c7; }
-  .seg-header.accent { background: var(--agid-accent-lt); color: #005580; border-color: #9ed9f0; }
-  .seg-header.orange { background: var(--agid-orange-lt); color: #7A2900; border-color: #f0c4b3; }
+  .seg-header.accent { background: var(--agid-accent-lt); color: #004466; border-color: #9ed9f0; }
+  .seg-header.orange { background: var(--agid-orange-lt); color: #6B2300; border-color: #f0c4b3; }
 
   .tl-item {
     display: flex; gap: 10px; padding: 9px 16px;
@@ -252,6 +277,7 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
 <div class="gov-bar">
   <span>🇮🇹 An official website of the Italian Government —</span>
   <a href="https://www.agid.gov.it" target="_blank">Agenzia per l'Italia Digitale (AgID)</a>
@@ -276,7 +302,7 @@
     </div>
 
     <div style="margin-top:18px;">
-      <button id="install-btn" onclick="installApp()" style="display:none; align-items:center; gap:8px; padding:10px 20px; background:#00A3E0; color:#fff; border:none; border-radius:6px; font-family:'Titillium Web',sans-serif; font-size:14px; font-weight:700; cursor:pointer;">
+      <button id="install-btn" onclick="installApp()" aria-label="Install this app on your device" style="display:none; align-items:center; gap:8px; padding:10px 20px; background:#00A3E0; color:#fff; border:none; border-radius:6px; font-family:'Titillium Web',sans-serif; font-size:14px; font-weight:700; cursor:pointer;">
         📲 Install as app
       </button>
     </div>
@@ -292,6 +318,7 @@
   <span>☎️ AgID: <strong>+39 06 852641</strong></span>
 </div>
 
+<main id="main-content">
 <div class="container">
 
   <div class="section">
@@ -299,7 +326,7 @@
     <h2 class="section-title">AgID headquarters</h2>
     <div class="venue-grid">
       <div class="venue-map-wrap">
-        <div id="map-venue" style="height:280px;"></div>
+        <div id="map-venue" style="height:280px;" role="application" aria-label="Interactive map showing AgID headquarters location in Rome"></div>
       </div>
       <div class="venue-info">
         <div class="info-row">
@@ -331,14 +358,15 @@
     <h2 class="section-title">Get directions to AgID</h2>
     <div class="route-box">
       <p style="font-size:13px; color:var(--agid-text-muted); margin-bottom:14px;">Enter your starting point (hotel name, address, or landmark) and open a live route to AgID.</p>
-      <div class="mode-tabs">
-        <button class="mode-tab active" onclick="setMode('transit',this)">🚇 Transit</button>
-        <button class="mode-tab" onclick="setMode('driving',this)">🚗 Car</button>
-        <button class="mode-tab" onclick="setMode('bicycling',this)">🚲 Bike</button>
-        <button class="mode-tab" onclick="setMode('walking',this)">🚶 Walking</button>
+      <div class="mode-tabs" role="group" aria-label="Travel mode">
+        <button class="mode-tab active" onclick="setMode('transit',this)" aria-pressed="true">🚇 Transit</button>
+        <button class="mode-tab" onclick="setMode('driving',this)" aria-pressed="false">🚗 Car</button>
+        <button class="mode-tab" onclick="setMode('bicycling',this)" aria-pressed="false">🚲 Bike</button>
+        <button class="mode-tab" onclick="setMode('walking',this)" aria-pressed="false">🚶 Walking</button>
       </div>
       <div class="route-inputs">
-        <input type="text" id="origin" placeholder="Your hotel or starting address…" />
+        <label for="origin" class="visually-hidden">Starting address or hotel</label>
+        <input type="text" id="origin" name="origin" autocomplete="street-address" placeholder="Your hotel or starting address…" aria-label="Starting address or hotel" />
         <button class="route-btn" onclick="openGoogleMaps()">Google Maps →</button>
         <button class="route-btn route-btn-osm" onclick="openOSM()">OpenStreetMap →</button>
       </div>
@@ -350,7 +378,7 @@
     <p class="section-label">Transport</p>
     <h2 class="section-title">How to reach AgID</h2>
     <div class="transport-grid">
-      <div class="transport-card metro">
+      <article class="transport-card metro" aria-label="Metro B directions">
         <div class="t-header"><div class="t-icon metro">🚇</div><div><div class="t-title">Metro B</div><div class="t-subtitle">From city centre · Fastest</div></div></div>
         <ul class="step-list">
           <li><span class="step-num">1</span><span>Take <strong>Metro B</strong> (blue line) from any B station</span></li>
@@ -368,7 +396,7 @@
             🗺️ Walking route: EUR Palasport → AgID
           </div>
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d712.8!2d12.4670!3d41.8319!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0x13258b1e721e497b:0xfab91710404886ef!2sEUR+Palasport+Metro,+Rome!3m2!1d41.8301246!2d12.4662992!4m5!1s0x13258ae234a3e7c1:0x653d87ff1bf26eae!2sAgID+-+Agenzia+per+l\'Italia+Digitale,+Via+Liszt,+21,+00144+Roma!3m2!1d41.8337229!2d12.4678744!5e0!3m2!1sen!2sit!4v1716000000010"
+            title="Map showing walking route from EUR Palasport metro station to AgID headquarters" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d712.8!2d12.4670!3d41.8319!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0x13258b1e721e497b:0xfab91710404886ef!2sEUR+Palasport+Metro,+Rome!3m2!1d41.8301246!2d12.4662992!4m5!1s0x13258ae234a3e7c1:0x653d87ff1bf26eae!2sAgID+-+Agenzia+per+l\'Italia+Digitale,+Via+Liszt,+21,+00144+Roma!3m2!1d41.8337229!2d12.4678744!5e0!3m2!1sen!2sit!4v1716000000010"
             width="100%" height="240" style="border:none; display:block;"
             allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
           </iframe>
@@ -376,8 +404,8 @@
             <strong>Step by step:</strong> Exit EUR Palasport station → walk <strong>north on Viale Beethoven</strong> (~200m) → turn <strong>right into Via Liszt</strong> → AgID is at <strong>n. 21</strong> on your left (~150m). Total: ~350m, about 5 min.
           </div>
         </div>
-      </div>
-      <div class="transport-card train">
+      </article>
+      <article class="transport-card train" aria-label="Train from Roma Termini directions">
         <div class="t-header"><div class="t-icon train">🚆</div><div><div class="t-title">From Roma Termini</div><div class="t-subtitle">High-speed or regional trains</div></div></div>
         <ul class="step-list">
           <li><span class="step-num">1</span><span>Arrive at <strong>Roma Termini</strong> — Italy's main rail hub</span></li>
@@ -389,8 +417,8 @@
           <span class="tag time">⏱ ~30 min total</span>
           <span class="tag cost">€ 1.50 metro ticket</span>
         </div>
-      </div>
-      <div class="transport-card airport">
+      </article>
+      <article class="transport-card airport" aria-label="From Fiumicino Airport directions">
         <div class="t-header"><div class="t-icon airport">✈️</div><div><div class="t-title">From Fiumicino (FCO)</div><div class="t-subtitle">Leonardo da Vinci Airport</div></div></div>
         <ul class="step-list">
           <li><span class="step-num">1</span><span><strong>Leonardo Express</strong> FCO → Termini (30 min, every 15 min)</span></li>
@@ -402,8 +430,8 @@
           <span class="tag time">⏱ ~55 min train+metro</span>
           <span class="tag cost">€ 17.50 Leo Express + metro</span>
         </div>
-      </div>
-      <div class="transport-card taxi">
+      </article>
+      <article class="transport-card taxi" aria-label="Taxi and rideshare directions">
         <div class="t-header"><div class="t-icon taxi">🚖</div><div><div class="t-title">Taxi &amp; Rideshare</div><div class="t-subtitle">Door-to-door</div></div></div>
         <ul class="step-list">
           <li><span class="step-num">1</span><span><strong>itTaxi</strong> or <strong>FREE NOW</strong> apps work well in Rome</span></li>
@@ -415,7 +443,7 @@
           <span class="tag time">⏱ 15–40 min (traffic-dependent)</span>
           <span class="tag cost">€10–25 from centre</span>
         </div>
-      </div>
+      </article>
     </div>
     <div class="info-box green" style="margin-top:16px;">
       <strong>🎫 Rome public transport tickets:</strong> Single BIT <strong>€1.50</strong> (valid 100 min, one metro ride). Day pass <strong>€7.00</strong>. 48h <strong>€12.50</strong>. 72h <strong>€18.00</strong>. Weekly <strong>€24.00</strong>. Available at metro machines, tobacconists (tabacchi), and via <em>Tap &amp; Go</em> contactless (bank card / Apple Pay / Google Pay — €1.50/ride).
@@ -519,7 +547,7 @@
           <div style="font-size:11px; color:rgba(255,255,255,0.75);">EUR Palasport → Colosseo · direction Jonio/Rebibbia · ~18 min · 8 stops</div>
         </div>
       </div>
-      <iframe
+      <iframe title="Map showing walking route from EUR Palasport metro station to AgID"
         src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d8714!2d12.479!3d41.860!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e3!4m5!1s0x13258ae234a3e7c1%3A0x653d87ff1bf26eae!2sAgID+Agenzia+per+l%27Italia+Digitale%2C+Via+Liszt%2C+21%2C+00144+Roma!3m2!1d41.8337229!2d12.4678744!4m5!1s0x13258b1e721e497b%3A0xfab91710404886ef!2sEUR+Palasport+Metro%2C+Rome!3m2!1d41.8301246!2d12.4662992!5e0!3m2!1sen!2sit!4v1716000000020"
         width="100%" height="220" style="border:none; display:block;"
         allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
@@ -528,7 +556,7 @@
         <span style="font-size:12px; color:var(--agid-text-muted);">↑ Walk AgID → EUR Palasport (~5 min)</span>
         <span style="font-size:12px; color:var(--agid-text-muted); margin-left:auto;">Then board Metro B direction Jonio / Rebibbia ↓</span>
       </div>
-      <iframe
+      <iframe title="Map showing route from AgID to EUR Palasport metro station"
         src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d14074!2d12.479!3d41.860!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e3!4m5!1s0x13258b1e721e497b%3A0xfab91710404886ef!2sEUR+Palasport+Metro%2C+Rome!3m2!1d41.8301246!2d12.4662992!4m5!1s0x132f61b283540c55%3A0x3975c39cc7e05043!2sColosseo+Metro%2C+Piazza+del+Colosseo%2C+Roma!3m2!1d41.8901!2d12.4922!5e0!3m2!1sen!2sit!4v1716000000022"
         width="100%" height="260" style="border:none; display:block;"
         allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
@@ -547,7 +575,7 @@
           <div style="font-size:11px; color:rgba(255,255,255,0.8);">~2 km on foot · flat terrain · ~45–60 min at a leisurely pace</div>
         </div>
       </div>
-      <iframe
+      <iframe title="Map showing Metro B route from EUR Palasport to Colosseo"
         src="https://www.google.com/maps/embed?pb=!1m34!1m12!1m3!1d1867!2d12.4876!3d41.8926!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m19!3e2!4m5!1s0x132f61b283540c55%3A0x3975c39cc7e05043!2sColosseo%2C+Piazza+del+Colosseo%2C+1%2C+00184+Roma!3m2!1d41.8902102!2d12.4922309!4m5!1s0x13258f4213c69b0f%3A0x1b1d2a8a4ad4e2fb!2sVia+dei+Fori+Imperiali%2C+Roma!3m2!1d41.8931814!2d12.4872587!4m5!1s0x13258f4d68782aad%3A0x3d5dbe7db6e77c3d!2sAltare+della+Patria%2C+Piazza+Venezia%2C+00186+Roma!3m2!1d41.894891!2d12.4829541!5e0!3m2!1sen!2sit!4v1716000000021"
         width="100%" height="300" style="border:none; display:block;"
         allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
@@ -582,6 +610,7 @@
   </div>
 
 </div>
+</main>
 
 <footer>
   <p><strong>European Data Portal's Workshop for Data Providers</strong></p>
@@ -593,8 +622,12 @@
 let travelMode = 'transit';
 function setMode(m, el) {
   travelMode = m;
-  document.querySelectorAll('.mode-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.mode-tab').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-pressed', 'false');
+  });
   el.classList.add('active');
+  el.setAttribute('aria-pressed', 'true');
 }
 function getOrigin() {
   const o = document.getElementById('origin').value.trim();
