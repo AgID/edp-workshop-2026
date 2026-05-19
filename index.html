@@ -55,7 +55,7 @@
     display: flex; align-items: center; gap: 10px;
   }
   .gov-bar span { font-size: 0.8rem; color: rgba(255,255,255,0.92); font-weight: 400; }
-  .gov-bar a { color: rgba(255,255,255,0.9); font-size: 0.8rem; font-weight: 600; text-decoration: none; }
+  .gov-bar a { color: rgba(255,255,255,0.9); font-size: 0.8rem; font-weight: 600; text-decoration: underline; }
 
   .hero {
     background: var(--agid-blue-dark);
@@ -74,9 +74,9 @@
   }
   .hero-inner { max-width: 920px; margin: 0 auto; position: relative; z-index: 1; }
   .hero-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
-  .hero-org { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--agid-accent); }
+  .hero-org { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.9); }
   .hero h1 { font-weight: 700; font-size: clamp(1.375rem, 4vw, 2.375rem); line-height: 1.2; margin-bottom: 8px; }
-  .hero-subtitle { font-size:1rem; font-weight: 300; color: rgba(255,255,255,0.8); margin-bottom: 28px; max-width: 580px; }
+  .hero-subtitle { font-size:1rem; font-weight: 300; color: rgba(255,255,255,0.92); margin-bottom: 28px; max-width: 580px; }
   .hero-chips { display: flex; flex-wrap: wrap; gap: 10px; }
   .chip {
     display: inline-flex; align-items: center; gap: 6px;
@@ -113,7 +113,7 @@
   .info-icon.orange { background: var(--agid-orange-lt); }
   .info-row-label { font-size:0.7rem; color: var(--agid-text-muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; }
   .info-row-value  { font-size: 0.875rem; color: var(--agid-text); margin-top: 2px; }
-  .info-row-value a { color: var(--agid-blue); text-decoration: none; }
+  .info-row-value a { color: var(--agid-blue); text-decoration: underline; }
   .info-row-value a:hover { text-decoration: underline; }
 
   .route-box { background: #fff; border: 1px solid var(--agid-gray-line); border-radius: var(--radius); padding: 22px; }
@@ -144,10 +144,11 @@
     background: #fff; border: 1px solid var(--agid-gray-line);
     border-radius: var(--radius); padding: 18px;
     border-top: 3px solid var(--agid-blue);
+    border-left: 4px solid var(--agid-blue);
   }
-  .transport-card.train   { border-top-color: var(--agid-green); }
-  .transport-card.airport { border-top-color: var(--agid-orange); }
-  .transport-card.taxi    { border-top-color: var(--agid-accent); }
+  .transport-card.train   { border-top-color: var(--agid-green);  border-left-color: var(--agid-green); }
+  .transport-card.airport { border-top-color: var(--agid-orange); border-left-color: var(--agid-orange); }
+  .transport-card.taxi    { border-top-color: var(--agid-accent); border-left-color: var(--agid-accent); }
   .t-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
   .t-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size:1.125rem; }
   .t-icon.metro   { background: var(--agid-blue-pale); }
@@ -223,7 +224,7 @@
   .tl-item {
     display: flex; gap: 10px; padding: 9px 16px;
     border-bottom: 1px solid rgba(0,102,204,0.07);
-    font-size: 12.5px; align-items: flex-start;
+    font-size: 0.8rem; align-items: flex-start;
   }
   .tl-item:last-child { border-bottom: none; }
   .tl-time { font-weight: 700; font-size:0.75rem; color: var(--agid-blue); min-width: 80px; padding-top: 2px; white-space: nowrap; }
@@ -233,7 +234,7 @@
   .tl-dot.key    { background: var(--agid-blue); }
   .tl-desc { color: var(--agid-text); line-height: 1.45; flex: 1; }
   .tl-desc strong { font-weight: 700; color: var(--agid-blue-dark); }
-  .tl-desc em { font-size: 11.5px; color: var(--agid-text-muted); display: block; margin-top: 2px; font-style: normal; }
+  .tl-desc em { font-size: 0.75rem; color: var(--agid-text-muted); display: block; margin-top: 2px; font-style: normal; }
 
   .tour-route { background: #fff; border: 1px solid var(--agid-gray-line); border-radius: var(--radius); overflow: hidden; }
   .tour-route iframe { width: 100%; height: 340px; border: none; display: block; }
@@ -241,7 +242,7 @@
   .stop-pill {
     display: flex; align-items: center; gap: 7px;
     padding: 6px 12px; border: 1px solid var(--agid-gray-line);
-    border-radius: 100px; font-size: 12.5px; background: #fff;
+    border-radius: 100px; font-size: 0.8rem; background: #fff;
   }
   .stop-num {
     width: 20px; height: 20px; border-radius: 50%;
@@ -263,7 +264,7 @@
   }
   .tip-icon  { font-size:1.375rem; margin-bottom: 6px; }
   .tip-title { font-weight: 700; font-size: 0.875rem; color: var(--agid-blue-dark); margin-bottom: 4px; }
-  .tip-body  { font-size: 12.5px; color: var(--agid-text-muted); line-height: 1.5; }
+  .tip-body  { font-size: 0.8rem; color: var(--agid-text-muted); line-height: 1.5; }
 
   footer {
     background: var(--agid-blue-xdark); color: rgba(255,255,255,0.9);
@@ -548,7 +549,7 @@
           <div style="font-size:0.75rem; color:rgba(255,255,255,0.92);">EUR Palasport → Colosseo · direction Jonio/Rebibbia · ~18 min · 8 stops</div>
         </div>
       </div>
-      <iframe tabindex="0" title="Map showing walking route from EUR Palasport metro station to AgID" aria-label="Map showing walking route from EUR Palasport metro station to AgID"
+      <iframe tabindex="0" title="Route overview from AgID to EUR Palasport metro station" aria-label="Route overview from AgID to EUR Palasport metro station"
         src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d8714!2d12.479!3d41.860!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e3!4m5!1s0x13258ae234a3e7c1%3A0x653d87ff1bf26eae!2sAgID+Agenzia+per+l%27Italia+Digitale%2C+Via+Liszt%2C+21%2C+00144+Roma!3m2!1d41.8337229!2d12.4678744!4m5!1s0x13258b1e721e497b%3A0xfab91710404886ef!2sEUR+Palasport+Metro%2C+Rome!3m2!1d41.8301246!2d12.4662992!5e0!3m2!1sen!2sit!4v1716000000020"
         width="100%" height="220" style="border:none; display:block;"
         allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
@@ -562,7 +563,7 @@
         width="100%" height="260" style="border:none; display:block;"
         allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
       </iframe>
-      <div style="padding:10px 18px; font-size:12.5px; color:var(--agid-text); line-height:1.6; background:var(--agid-blue-pale);">
+      <div style="padding:10px 18px; font-size:0.8rem; color:var(--agid-text); line-height:1.6; background:var(--agid-blue-pale);">
         <strong>From AgID:</strong> Exit onto Via Liszt → left on Viale Beethoven (~150m) → left to <strong>EUR Palasport</strong> Metro B (~5 min walk). Board direction <em>Jonio / Rebibbia</em> and ride 8 stops to <strong>Colosseo</strong>. Exit: the Colosseum is visible immediately outside the station.
       </div>
     </div>
@@ -581,7 +582,7 @@
         width="100%" height="300" style="border:none; display:block;"
         allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
       </iframe>
-      <div style="padding:12px 18px; font-size:12.5px; color:var(--agid-text); line-height:1.6; background:var(--agid-orange-lt); border-top:1px solid rgba(204,68,0,0.15);">
+      <div style="padding:12px 18px; font-size:0.8rem; color:var(--agid-text); line-height:1.6; background:var(--agid-orange-lt); border-top:1px solid rgba(204,68,0,0.15);">
         <strong>Route:</strong>
         <strong>1</strong> Start at the <strong>Colosseo</strong> (exterior view, Arco di Costantino) →
         <strong>2</strong> Walk west along <strong>Via dei Fori Imperiali</strong> (~600m, ruins of the Imperial Fora on both sides) →
